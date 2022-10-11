@@ -11,6 +11,23 @@ services:
       - MYSQL_PASSWORD=An0thrS3crt
       - MYSQL_USER=citizix_user
       - MYSQL_DATABASE=citizix_db
+
+  sa-keycloak:
+    image: quay.io/keycloak/keycloak:19.0.2
+    container_name: keycloak
+    volumes:
+      - ./keycloak/realms/export:/tmp/export
+      - ./keycloak/realms/import:/opt/keycloak/data/import
+    ports:
+      - '9090:9090'
+    command:
+      - "start-dev"
+      - "--import-realm"
+      - "--http-port=9090"
+
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
 volumes:
   mysql:
     driver: local

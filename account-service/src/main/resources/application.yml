@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/sa-mini-project1-realm-prod
+          jwk-set-uri: http://localhost:9090/realms/sa-mini-project1-realm-prod/protocol/openid-connect/certs
+  datasource:
+    url: jdbc:mysql://localhost:3306/citizix_db
+    username: citizix_user
+    password: An0thrS3crt
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+      hibernate:
+        ddl-auto: update
+    sql:
+      init:
+        mode: always
+keycloak:
+  client-id: sa-mini-project1
+  secret: Yvhd7uSP0krdOb5fanvH1DWKIKsUyZqT
+  auth-url: http://localhost:9090/realms/sa-mini-project1-realm-prod/protocol/openid-connect/token
