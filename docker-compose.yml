@@ -17,7 +17,7 @@ services:
     ports:
       - 3307:3306
     volumes:
-      - ~/apps/mysql:/var/lib/mysql
+      - ~/apps/mysql1:/var/lib/mysql1
     environment:
       - MYSQL_ROOT_PASSWORD=S3cret
       - MYSQL_PASSWORD=An0thrS3crt

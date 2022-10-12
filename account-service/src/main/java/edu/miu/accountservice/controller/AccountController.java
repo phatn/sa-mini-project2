@@ -4,9 +4,6 @@ import edu.miu.accountservice.dto.AccountDto;
 import edu.miu.accountservice.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.ReactiveSecurityContextHolder;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/account")
+@RequestMapping("/account")
 @Slf4j
 public class AccountController {
     private final AccountService accountService;
+
 
     @GetMapping("/{id}")
     public AccountDto findById(@PathVariable int id) {
