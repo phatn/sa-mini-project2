@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
     private final AccountService accountService;
 
-
     @GetMapping("/{id}")
-    public AccountDto findById(@PathVariable int id) {
+    public AccountDto findAccountById(@PathVariable int id) {
         return accountService.findById(id);
+    }
+
+    @GetMapping("/email/{email}")
+    public AccountDto findAccountByEmail(@PathVariable String email) {
+        return accountService.findByEmail(email);
     }
 }

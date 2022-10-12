@@ -2,10 +2,13 @@ package edu.miu.accountservice.dto;
 
 import edu.miu.accountservice.entity.Address;
 import edu.miu.accountservice.entity.Payment;
+import edu.miu.accountservice.entity.PaymentType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Setter
 @Getter
@@ -16,6 +19,7 @@ public class AccountDto {
     private String firstName;
     private String lastName;
     private String email;
-    private Address address;
-    private Payment payment;
+    private Set<Address> address;
+    private Set<Payment> payment;
+    private PaymentType preferredPayment;
 }

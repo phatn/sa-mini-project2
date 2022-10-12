@@ -1,24 +1,35 @@
 package edu.miu.accountservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
-@Embeddable
+@Entity
 @Getter
 @Setter
 public class Payment {
-    private String type;
-//    // for card
-//    private String cardNumber;
-//    private String cardSecurityCode;
-//    private String cardExpires;
-//    // for bank
-//    private String bankAccount;
-//    private String routingNumber;
-//    private String bankName;
-//    // for paypal
-//    private String accountNumber;
-//    private String accountToken;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentType type;
+
+    // CARD
+    private String cardNumber;
+    private String cardSecurityCode;
+    private String cardExpires;
+    // BANK
+    private String bankAccount;
+    private String bankRouting;
+    private String bankName;
+    // PAYPAL
+    private String paypalNumber;
+    private String paypalToken;
+
+    @ManyToOne
+    @JsonBackReference
+    private Account owner;
 }

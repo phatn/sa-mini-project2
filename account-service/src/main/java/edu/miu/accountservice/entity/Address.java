@@ -1,15 +1,24 @@
 package edu.miu.accountservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 
-@Embeddable
+@Entity
 @Getter
 @Setter
 public class Address {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private String zipCode;
     private String street;
     private String city;
-    private String zipCode;
+
+    @ManyToOne
+    @JsonBackReference
+    private Account owner;
 }

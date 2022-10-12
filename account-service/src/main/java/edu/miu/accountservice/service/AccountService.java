@@ -4,5 +4,7 @@ import edu.miu.accountservice.dto.AccountDto;
 
 public interface AccountService {
     AccountDto findById(int id);
+
+    AccountDto findByEmail(String email);
 }
 
