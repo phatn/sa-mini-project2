@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   mysql:
-    image: mysql:8
+    image: mysql:latest
     ports:
       - 3306:3306
     volumes:
@@ -11,6 +11,18 @@ services:
       - MYSQL_PASSWORD=An0thrS3crt
       - MYSQL_USER=citizix_user
       - MYSQL_DATABASE=citizix_db
+
+  mysql1:
+    image: mysql:latest
+    ports:
+      - 3307:3306
+    volumes:
+      - ~/apps/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=S3cret
+      - MYSQL_PASSWORD=An0thrS3crt
+      - MYSQL_USER=citizix_user
+      - MYSQL_DATABASE=citizix_db1
 
   sa-keycloak:
     image: quay.io/keycloak/keycloak:19.0.2

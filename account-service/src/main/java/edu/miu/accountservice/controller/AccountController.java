@@ -1,8 +1,12 @@
 package edu.miu.accountservice.controller;
 
+import edu.miu.accountservice.dto.AccountDto;
+import edu.miu.accountservice.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +17,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/account")
 @Slf4j
 public class AccountController {
+    private final AccountService accountService;
 
-    @GetMapping
-    public String getEmail() {
-        String email = ReactiveSecurityContextHolder.getContext()
-                .map(ctx -> ctx.getAuthentication().getPrincipal()).block().toString();
-        return email;
+    @GetMapping("/{id}")
+    public AccountDto findById(@PathVariable int id) {
+        return accountService.findById(id);
     }
 }
