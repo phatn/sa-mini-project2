@@ -1,6 +1,7 @@
 package edu.miu.accountservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,10 +10,13 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    private String type;
 
     // CARD
     private String cardNumber;

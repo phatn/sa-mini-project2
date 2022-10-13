@@ -25,9 +25,4 @@ public class AccountController {
     public AccountDto findAccountByEmail(@PathVariable String email) {
         return accountService.findByEmail(email);
     }
-
-    @GetMapping("/address/{email}")
-    public AccountDto findAddressByEmail(@PathVariable String email) {
-        return accountService.findByEmail(email);
-    }
 }

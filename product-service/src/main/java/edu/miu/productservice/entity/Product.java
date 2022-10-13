@@ -1,5 +1,6 @@
 package edu.miu.productservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,8 +15,9 @@ public class Product {
     private int id;
     private String name;
     private String vendor;
-    private int units;
+    private int quantity;
 
-    @Enumerated(EnumType.STRING)
-    private ProductType category;
+    @ManyToOne
+    @JsonBackReference
+    private Category category;
 }

@@ -1,18 +1,20 @@
 package edu.miu.productservice.dto;
 
+import edu.miu.productservice.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class ProductDto {
+public class CategoryDto {
     private int id;
-    private int quantity;
     private String name;
-    private String vendor;
+    private Set<Product> products;
 }
