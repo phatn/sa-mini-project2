@@ -16,7 +16,7 @@ public class Product {
     private String name;
     private String vendor;
     private int quantity;
-
+    private double price;
     @ManyToOne
     @JsonBackReference
     private Category category;

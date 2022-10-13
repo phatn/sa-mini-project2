@@ -18,7 +18,7 @@ public class Payment {
 
     private String type;
 
-    // CARD
+    // CREDIT CARD
     private String cardNumber;
     private String cardSecurityCode;
     private String cardExpires;
