@@ -14,9 +14,6 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Enumerated(EnumType.STRING)
-    private PaymentType type;
-
     // CARD
     private String cardNumber;
     private String cardSecurityCode;

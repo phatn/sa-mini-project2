@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PreDestroy;
+import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor

@@ -29,6 +29,6 @@ public class Account {
     @JsonManagedReference
     private Set<Payment> payment;
 
-    @Enumerated(EnumType.STRING)
-    private PaymentType preferredPayment;
+    private int preferredPayment;
+    private int preferredAddress;
 }

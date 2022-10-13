@@ -21,8 +21,13 @@ public class AccountController {
         return accountService.findById(id);
     }
 
-    @GetMapping("/email/{email}")
+    @GetMapping("/info/{email}")
     public AccountDto findAccountByEmail(@PathVariable String email) {
+        return accountService.findByEmail(email);
+    }
+
+    @GetMapping("/address/{email}")
+    public AccountDto findAddressByEmail(@PathVariable String email) {
         return accountService.findByEmail(email);
     }
 }
