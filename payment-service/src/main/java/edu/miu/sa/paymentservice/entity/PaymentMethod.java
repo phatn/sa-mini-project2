@@ -1,8 +1,9 @@
 package edu.miu.sa.paymentservice.entity;
 
-public class Payment {
-    private int totalPrice;
+import lombok.Data;
 
+@Data
+public class PaymentMethod {
     // CREDIT CARD, BANK, PAYPAL
     private String type;
 

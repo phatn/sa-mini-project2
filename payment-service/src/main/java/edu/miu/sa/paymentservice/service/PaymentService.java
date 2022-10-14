@@ -1,7 +1,11 @@
 package edu.miu.sa.paymentservice.service;
 
-import edu.miu.sa.paymentservice.entity.Payment;
+import edu.miu.sa.paymentservice.entity.PaymentMethod;
+import edu.miu.sa.paymentservice.entity.PaymentRequest;
 
 public interface PaymentService {
-    Payment getInfoPayment();
+    PaymentMethod getInfoPayment();
+
+    void decidePayment(PaymentRequest paymentRequest);
+    void failedPayment(String orderNumber, String reason);
 }
