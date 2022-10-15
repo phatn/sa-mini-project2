@@ -1,13 +1,13 @@
-package edu.miu.sa.paymentservice.entity;
+package edu.miu.sa.paymentservice.dto;
 
 import lombok.Data;
 
 @Data
-public class PaymentMethod {
-    // CREDIT CARD, BANK, PAYPAL
+public class PaymentDTO {
+    // CREDIT, BANK, PAYPAL
     private String type;
 
-    // CREDIT CARD
+    // CREDIT
     private String cardNumber;
     private String cardSecurityCode;
     private String cardExpires;
