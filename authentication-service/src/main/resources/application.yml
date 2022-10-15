@@ -1,0 +1,4 @@
+keycloak:
+  client-id: sa-mini-project1
+  secret: Yvhd7uSP0krdOb5fanvH1DWKIKsUyZqT
+  auth-url: https://keycloak.192.168.64.2.nip.io/realms/sa-mini-project1-realm-prod/protocol/openid-connect/token
