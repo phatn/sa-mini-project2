@@ -1,18 +1,35 @@
 spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 10s
+server:
+  shutdown: graceful
+  port: 8081
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
   datasource:
-    url: jdbc:mysql://localhost:3307/citizix_db1
-    username: citizix_user
-    password: An0thrS3crt
+    url: jdbc:mysql://192.168.64.2:30306/account-db
+    username: root
+    password: mysql
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
-    defer-datasource-initialization: true
-  sql:
-    init:
-      mode: always
-
-server:
-  port: 8081
-
-
+      ddl-auto: none
+account-service-secret-key: "3e026744-4d78-11ed-bdc3-0242ac120002"
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://mysql:3306/account-db
+    username: root
+    password: mysql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+account-service-secret-key: ${ACCOUNT_SERVICE_SECRET_KEY}

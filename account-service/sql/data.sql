@@ -1,7 +1,8 @@
+use `account-db`;
 INSERT INTO account(`first_name`, `last_name`, `email`,`preferred_payment`, `preferred_address`)
-VALUES ('Oliver', 'Nguyen', 'oliver@gmail.com', '1', '1'),
-       ('Lionel', 'Messi', 'messi@gmail.com', '2', '2'),
-       ('Cristiano', 'Ronaldo', 'ronaldo@gmail.com', '3', '3');
+VALUES ('Admin', 'User', 'admin@gmail.com', '1', '1'),
+       ('Phat', 'Nguyen', 'phatnguyen@outlook.com', '2', '2'),
+       ('Anh', 'Nguyen', 'tuananh@gmail.com', '3', '3');
 
 INSERT INTO address(`street`, `city`, `zip_code`, `owner_id`)
 VALUES ('414 NB St', 'Fairfield', '52556', '1'),
