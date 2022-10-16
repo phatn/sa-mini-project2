@@ -13,13 +13,13 @@ import java.util.Objects;
 
 @Slf4j
 @RestController
-@RequestMapping("api/paypal")
+@RequestMapping("/api/paypal")
 @RequiredArgsConstructor
 public class PaypalController {
 
     private final PaypalService paypalService;
 
-    @PostMapping("pay")
+    @PostMapping
     public void pay(@RequestBody PaymentRequestDTO body) {
         if (Objects.isNull(body.getPaymentMethod().getPaypalNumber())
                 || Objects.isNull(body.getPaymentMethod().getPaypalToken())) {

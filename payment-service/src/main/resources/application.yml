@@ -1,9 +1,33 @@
-paypal:
-  paypal-url: http://localhost:8080/api/paypal/pay
-bank:
-  bank-url: http://localhost:8080/api/bank/pay
-credit:
-  bank-url: http://localhost:8080/api/credit/pay
-
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 10s
 server:
+  shutdown: graceful
   port: 8086
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+payment:
+  paypal-service-url: http://localhost:8089/api/paypal
+  bank-service-url: http://localhost:8083/api/bank
+  credit-service-url: http://localhost:8084/api/credit
+
+paypal-service-secret-key: "3e02714e-4d78-11ed-bdc3-0242ac120002"
+bank-service-secret-key: "3e02714e-4d78-11ed-bdc3-0242ac120002"
+credit-service-secret-key: "3e02714e-4d78-11ed-bdc3-0242ac120002"
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+payment:
+  paypal-service-url: ${PAYPAL_SERVICE_URL}
+  bank-service-url: ${BANK_SERVICE_URL}
+  credit-service-url: ${CREDIT_SERVICE_URL}
+
+paypal-service-secret-key: ${PAYPAL_SERVICE_SECRET_KEY}
+bank-service-secret-key: ${BANK_SERVICE_SECRET_KEY}
+credit-service-secret-key: ${CREDIT_SERVICE_SECRET_KEY}

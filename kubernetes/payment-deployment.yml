@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+  labels:
+    app: payment-service
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      nodePort: 30082
+  selector:
+    app: payment-service
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-service
+  labels:
+    app: payment-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-service
+  template:
+    metadata:
+      labels:
+        app: payment-service
+    spec:
+      containers:
+        - name: payment-service
+          image: phatnguyentan/payment-service:1.0.0
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "prod"
+            - name: PAYPAL_SERVICE_SECRET_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: service-configmap
+                  key: paypal-service-secret-key
+            - name: BANK_SERVICE_SECRET_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: service-configmap
+                  key: bank-service-secret-key
+            - name: CREDIT_SERVICE_SECRET_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: service-configmap
+                  key: credit-service-secret-key
+            - name: PAYPAL_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: service-configmap
+                  key: paypal-service-url
+            - name: BANK_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: service-configmap
+                  key: bank-service-url
+            - name: CREDIT_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: service-configmap
+                  key: credit-service-url
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+

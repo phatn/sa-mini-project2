@@ -1,0 +1,6 @@
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 10s
+server:
+  shutdown: graceful
+  port: 8089
