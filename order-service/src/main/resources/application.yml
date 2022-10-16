@@ -26,6 +26,7 @@ spring:
           jwk-set-uri: http://localhost:8080/realms/sa-mini-project2-realm-prod/protocol/openid-connect/certs
 
 product-service-secret-key: "3e02714e-4d78-11ed-bdc3-0242ac120002"
+product-service-url: http://localhost:8087/service/products/
 ---
 spring:
   config:
