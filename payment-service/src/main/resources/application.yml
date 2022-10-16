@@ -4,3 +4,6 @@ bank:
   bank-url: http://localhost:8080/api/bank/pay
 credit:
   bank-url: http://localhost:8080/api/credit/pay
+
+server:
+  port: 8086

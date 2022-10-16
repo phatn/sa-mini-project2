@@ -28,6 +28,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Set<ProductDto> findProductByIds(List<Integer> ids) {
+        return productMapper.toDtos(productRepository.findProductByIds(ids));
+    }
+
+    @Override
     public Set<ProductDto> findAll() {
         Set<Product> products = new HashSet<>();
         productRepository.findAll().forEach(products::add);

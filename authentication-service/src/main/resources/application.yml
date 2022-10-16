@@ -1,4 +1,29 @@
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 10s
+server:
+  shutdown: graceful
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
 keycloak:
-  client-id: sa-mini-project1
-  secret: Yvhd7uSP0krdOb5fanvH1DWKIKsUyZqT
-  auth-url: https://keycloak.192.168.64.2.nip.io/realms/sa-mini-project1-realm-prod/protocol/openid-connect/token
+  client-id: sa-mini-project2
+  secret: 6udASZlAvYo3Cgl8l73KtXtlHV0WR9rB
+  auth-url: http://localhost:8080/realms/sa-mini-project2-realm-prod/protocol/openid-connect/token
+
+server:
+  port: 8082
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+keycloak:
+  client-id: sa-mini-project2
+  secret: 6udASZlAvYo3Cgl8l73KtXtlHV0WR9rB
+  auth-url: http://keycloak-service:8080/realms/sa-mini-project2-realm-prod/protocol/openid-connect/token
+
+server:
+  port: 8080

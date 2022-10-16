@@ -1,0 +1,25 @@
+minikube start --mount-string="keycloak/realms/import:/opt/keycloak/data/import" --mount
+minikube start --mount-string="keycloak/realms/export:/tmp/export" --mount
+
+
+kubectl get pods | grep keycloak
+kubectl exec -it keycloak-57c6789f87-6dg44 -- /bin/sh
+
+runtimeOnly 'mysql:mysql-connector-java'
+
+kubectl port-forward service/keycloak-service 8080:8080
+
+cd /opt/keycloak/bin
+sh kc.sh export --file sa-mini-project2-realm-prod.json --realm sa-mini-project2-realm-prod
+
+# Run keycloak in http://localhost:9090
+kubectl port-forward service/keycloak-service 8080:8080
+
+# Build image
+docker build -t authentication-service:1.0.0 .
+
+# Tag image
+docker tag 6d1c5e9862aa phatnguyentan/authentication-service:1.0.0
+
+# Push image
+docker push phatnguyentan/authentication-service:1.0.0
