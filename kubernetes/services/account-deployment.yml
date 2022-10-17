@@ -39,7 +39,7 @@ spec:
             - name: ACCOUNT_SERVICE_SECRET_KEY
               valueFrom:
                 configMapKeyRef:
-                  name: services-config
+                  name: service-configmap
                   key: account-service-secret-key
           ports:
             - name: http
