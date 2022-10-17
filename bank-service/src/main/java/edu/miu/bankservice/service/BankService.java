@@ -1,27 +1,49 @@
 package edu.miu.bankservice.service;
 
-import edu.miu.bankservice.dto.PaymentRequestDTO;
+import edu.miu.bankservice.entity.Payment;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import org.springframework.web.client.RestTemplate;
 
 @Service
-@RequiredArgsConstructor
+@Slf4j
 public class BankService {
-    public void shipToAddress(PaymentRequestDTO paymentRequest) {
-        // ship to address
-        //ship(paymentRequest.getOrderNumber(), paymentRequest.getAddress());
+    @Autowired
+    private final RestTemplate restTemplate;
+
+    private Environment env;
+
+    @Value("${shipping-service-secret-key}")
+    private String secretKey;
+
+    @Value("${shipping-service-url}")
+    private String shippingServiceUrl;
+
+    public BankService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
-    public void orderStatus(String orderNumber, String status, String reason) {
-        Map<String, Object> body = new HashMap<>();
-        if (Objects.nonNull(reason)) {
-            body.put("reason", reason);
+    public void shipToAddress(Payment payment) {
+        if (payment.getPaymentMap().containsKey("bankAccount")
+                && payment.getPaymentMap().containsKey("bankRouting")
+                && payment.getPaymentMap().containsKey("bankName")) {
+            HttpHeaders headers = createHeaders();
+            HttpEntity<Payment> httpEntity = new HttpEntity<>(payment, headers);
+            String response = restTemplate.postForEntity(shippingServiceUrl, httpEntity, String.class).getBody();
+            log.info(response);
         }
-        // update order status
-        //updateStatus(orderNumber, status, body);
+    }
+
+    private HttpHeaders createHeaders(){
+        return new HttpHeaders() {{
+            set( "X-SHIPPING-SERVICE-KEY", secretKey);
+            set("Content-Type", "application/json");
+        }};
     }
 }

@@ -85,7 +85,7 @@ public class OrderServiceImpl implements OrderService {
         // Send request to shipping
         HttpHeaders headersShipping = new HttpHeaders();
         headersShipping.set(Constant.X_PAYMENT_SERVICE_KEY, paymentSecretKey);
-        headersProduct.set("Content-Type", "application/json");
+        headersShipping.set("Content-Type", "application/json");
         Payment payment = Payment.builder()
                 .type(orderDto.getPaymentType())
                 .accountEmail(email)

@@ -4,3 +4,19 @@ spring:
 server:
   shutdown: graceful
   port: 8089
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+shipping-service-secret-key: "3e027946-4d78-11ed-bdc3-0242ac120002"
+shipping-service-url: http://localhost:8088/service/shipping
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+shipping-service-secret-key: ${SHIPPING_SERVICE_SECRET_KEY}
