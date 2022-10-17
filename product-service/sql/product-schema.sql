@@ -3,7 +3,7 @@
 -- Host: 192.168.64.2    Database: product-db
 -- ------------------------------------------------------
 -- Server version	8.0.30
-
+use `product-db`;
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;

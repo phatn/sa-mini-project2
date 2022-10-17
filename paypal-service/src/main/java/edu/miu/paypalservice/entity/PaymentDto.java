@@ -1,4 +1,4 @@
-package edu.miu.sa.paymentservice.entity;
+package edu.miu.paypalservice.entity;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +7,9 @@ import java.util.Map;
 
 @Builder
 @Data
-public class PaymentShip {
+public class PaymentDto {
+    private String type;
+    private String accountEmail;
     private String firstName;
     private String lastName;
     private String zipCode;

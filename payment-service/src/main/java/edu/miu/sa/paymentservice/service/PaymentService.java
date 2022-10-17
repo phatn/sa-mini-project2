@@ -1,8 +1,8 @@
 package edu.miu.sa.paymentservice.service;
 
-import edu.miu.sa.paymentservice.entity.Payment;
+import edu.miu.sa.paymentservice.entity.Order;
 
 public interface PaymentService {
 
-    void pay(Payment payment);
+    void pay(Order order);
 }

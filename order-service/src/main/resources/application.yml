@@ -27,6 +27,8 @@ spring:
 
 product-service-secret-key: "3e02714e-4d78-11ed-bdc3-0242ac120002"
 payment-service-secret-key: "3e026eba-4d78-11ed-bdc3-0242ac120002"
+account-service-secret-key: "3e026744-4d78-11ed-bdc3-0242ac120002"
+account-service-url: http://localhost:8081/service/account
 product-service-url: http://localhost:8087/service/products/
 payment-service-url: http://localhost:8086/api/payment/
 ---
@@ -53,3 +55,5 @@ product-service-secret-key: ${PRODUCT_SERVICE_SECRET_KEY}
 product-service-url: ${PRODUCT_SERVICE_URL}
 payment-service-secret-key: ${SHIPPING_SERVICE_SECRET_KEY}
 payment-service-url: ${PAYMENT_SERVICE_URL}
+account-service-url: ${ACCOUNT_SERVICE_URL}
+account-service-secret-key: ${ACCOUNT_SERVICE_SECRET_KEY}

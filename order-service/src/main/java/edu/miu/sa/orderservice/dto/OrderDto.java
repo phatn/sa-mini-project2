@@ -16,4 +16,8 @@ public class OrderDto {
     private Set<OrderItem> orderItems;
 
     private Map<String, String> payment;
+
+    private String zipCode;
+    private String street;
+    private String city;
 }

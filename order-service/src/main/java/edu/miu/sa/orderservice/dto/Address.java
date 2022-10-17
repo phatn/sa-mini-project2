@@ -1,4 +1,4 @@
-package edu.miu.sa.paymentservice.entity;
+package edu.miu.sa.orderservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

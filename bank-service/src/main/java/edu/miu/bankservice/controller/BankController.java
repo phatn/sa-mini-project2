@@ -1,6 +1,6 @@
 package edu.miu.bankservice.controller;
 
-import edu.miu.bankservice.entity.Payment;
+import edu.miu.bankservice.entity.PaymentDto;
 import edu.miu.bankservice.service.BankService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ public class BankController {
     private final BankService bankService;
 
     @PostMapping
-    public void pay(@RequestBody Payment payment) {
+    public void pay(@RequestBody PaymentDto payment) {
         bankService.shipToAddress(payment);
     }
 }

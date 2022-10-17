@@ -3,9 +3,7 @@ package edu.miu.sa.orderservice.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Sets;
 import edu.miu.sa.orderservice.contant.Constant;
-import edu.miu.sa.orderservice.dto.OrderDto;
-import edu.miu.sa.orderservice.dto.Payment;
-import edu.miu.sa.orderservice.dto.Product;
+import edu.miu.sa.orderservice.dto.*;
 import edu.miu.sa.orderservice.entity.Order;
 import edu.miu.sa.orderservice.entity.OrderItem;
 import edu.miu.sa.orderservice.repository.OrderRepository;
@@ -21,7 +19,9 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -47,6 +47,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Value("${payment-service-url}")
     private String paymentServiceUrl;
+
+    @Value("${account-service-secret-key}")
+    private String accountSecretKey;
+
+    @Value("${account-service-url}")
+    private String accountServiceUrl;
 
     @Override
     public void save(OrderDto orderDto) {
@@ -100,23 +106,66 @@ public class OrderServiceImpl implements OrderService {
             throw new RuntimeException("Error to update product quantities: " + e.getMessage());
         }
 
+        // Get info from account
+        HttpHeaders headersAccount = new HttpHeaders();
+        headersAccount.set(Constant.X_ACCOUNT_SERVICE_KEY, accountSecretKey);
+        headersAccount.set("Content-Type", "application/json");
+        String urlAccount = accountServiceUrl + "?email=" + email;
+        Address addressShipping = null;
+        Account accountShipping = null;
+        Payment paymentInfo = null;
+        try {
+            HttpEntity<Account> httpAccount = new HttpEntity<>(headersAccount);
+            accountShipping = restTemplate.exchange(urlAccount, HttpMethod.GET, httpAccount, new ParameterizedTypeReference<Account>(){}).getBody();
+            log.info("PAYMENT account: " + accountShipping);
+
+            if (orderDto.getStreet() == null && orderDto.getCity() == null && orderDto.getZipCode() == null) {
+                for (Address address : accountShipping.getAddress()) {
+                    if (address.getId() == accountShipping.getPreferredAddress()) {
+                        addressShipping = address;
+                    }
+                }
+                log.info("PAYMENT address: " + addressShipping);
+                orderDto.setCity(addressShipping.getCity());
+                orderDto.setZipCode(addressShipping.getZipCode());
+                orderDto.setStreet(addressShipping.getStreet());
+            }
+
+            if (orderDto.getPaymentType() == null) {
+                for (Payment payment : accountShipping.getPayment()) {
+                    if (payment.getId() == accountShipping.getPreferredPayment()) {
+                        paymentInfo = payment;
+                    }
+                }
+                log.info("PAYMENT payment info: " + paymentInfo);
+                orderDto.setPaymentType(paymentInfo.getType());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error to send request to payment service!" + e.getMessage());
+        }
+
         // Send request to shipping
         HttpHeaders headersShipping = new HttpHeaders();
         headersShipping.set(Constant.X_PAYMENT_SERVICE_KEY, paymentSecretKey);
         headersShipping.set("Content-Type", "application/json");
-        Payment payment = Payment.builder()
+        PaymentDto paymentDto = PaymentDto.builder()
                 .type(orderDto.getPaymentType())
                 .accountEmail(email)
                 .paymentMap(orderDto.getPayment())
+                .city(orderDto.getCity())
+                .zipCode(orderDto.getZipCode())
+                .street(orderDto.getStreet())
+                .firstName(accountShipping.getFirstName())
+                .lastName(accountShipping.getLastName())
                 .build();
 
         try {
-            HttpEntity<Payment> requestEntity = new HttpEntity<>(payment, headersShipping);
+            HttpEntity<PaymentDto> requestEntity = new HttpEntity<>(paymentDto, headersShipping);
             String response = restTemplate.postForEntity(paymentServiceUrl, requestEntity, String.class).getBody();
             log.info("Response from Shipping Service: " + response);
         } catch (Exception e) {
-            log.error("Error to send request to payment service!", e);
-            throw new RuntimeException("Error to send request to payment service!" + e.getMessage());
+            log.error("Error to send request to paymentDto service!", e);
+            throw new RuntimeException("Error to send request to paymentDto service!" + e.getMessage());
         }
     }
 

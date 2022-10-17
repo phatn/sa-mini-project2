@@ -1,19 +1,26 @@
 package edu.miu.sa.orderservice.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import lombok.Builder;
-import lombok.Data;
-
-import java.util.Map;
-
-@Data
-@Builder
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Payment {
-
-    private String accountEmail;
-
+    private int id;
     private String type;
-
-    private Map<String, String> paymentMap;
-
+    // CREDIT
+    private String cardNumber;
+    private String cardSecurityCode;
+    private String cardExpires;
+    // BANK
+    private String bankAccount;
+    private String bankRouting;
+    private String bankName;
+    // PAYPAL
+    private String paypalNumber;
+    private String paypalToken;
 }

@@ -14,11 +14,10 @@ payment:
   paypal-service-url: http://localhost:8089/api/paypal
   bank-service-url: http://localhost:8083/api/bank
   credit-service-url: http://localhost:8084/api/credit
-account-service-url: http://localhost:8081/service/account
+
 paypal-service-secret-key: "3e02714e-4d78-11ed-bdc3-0242ac120002"
 bank-service-secret-key: "3e02714e-4d78-11ed-bdc3-0242ac120002"
 credit-service-secret-key: "3e02714e-4d78-11ed-bdc3-0242ac120002"
-account-service-secret-key: "3e026744-4d78-11ed-bdc3-0242ac120002"
 ---
 spring:
   config:
@@ -29,8 +28,7 @@ payment:
   bank-service-url: ${BANK_SERVICE_URL}
   credit-service-url: ${CREDIT_SERVICE_URL}
 
-account-service-url: ${ACCOUNT_SERVICE_URL}
 paypal-service-secret-key: ${PAYPAL_SERVICE_SECRET_KEY}
 bank-service-secret-key: ${BANK_SERVICE_SECRET_KEY}
 credit-service-secret-key: ${CREDIT_SERVICE_SECRET_KEY}
-account-service-secret-key: ${ACCOUNT_SERVICE_SECRET_KEY}
+

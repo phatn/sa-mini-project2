@@ -1,6 +1,6 @@
 package edu.miu.paypalservice.controller;
 
-import edu.miu.paypalservice.entity.Payment;
+import edu.miu.paypalservice.entity.PaymentDto;
 import edu.miu.paypalservice.service.PaypalService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ public class PaypalController {
     private final PaypalService paypalService;
 
     @PostMapping
-    public void pay(@RequestBody Payment payment) {
-        paypalService.shipToAddress(payment);
+    public void pay(@RequestBody PaymentDto paymentDto) {
+        paypalService.shipToAddress(paymentDto);
     }
 }

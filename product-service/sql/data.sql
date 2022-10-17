@@ -1,3 +1,4 @@
+use `product-db`;
 INSERT INTO category(`name`)
 VALUES ('ELECTRONICS'),
        ('FOOD'),

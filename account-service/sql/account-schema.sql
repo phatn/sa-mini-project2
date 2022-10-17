@@ -72,13 +72,13 @@ LOCK TABLES `address` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `payment`
+-- Table structure for table `paymentDto`
 --
 
-DROP TABLE IF EXISTS `payment`;
+DROP TABLE IF EXISTS `paymentDto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `payment` (
+CREATE TABLE `paymentDto` (
   `id` int NOT NULL AUTO_INCREMENT,
   `bank_account` varchar(255) DEFAULT NULL,
   `bank_name` varchar(255) DEFAULT NULL,
@@ -97,12 +97,12 @@ CREATE TABLE `payment` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `payment`
+-- Dumping data for table `paymentDto`
 --
 
-LOCK TABLES `payment` WRITE;
-/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
+LOCK TABLES `paymentDto` WRITE;
+/*!40000 ALTER TABLE `paymentDto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `paymentDto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

@@ -13,6 +13,8 @@ spring:
 
 shipping-service-secret-key: "3e027946-4d78-11ed-bdc3-0242ac120002"
 shipping-service-url: http://localhost:8088/service/shipping
+account-service-secret-key: "3e026744-4d78-11ed-bdc3-0242ac120002"
+account-service-url: http://localhost:8081/service/account
 ---
 spring:
   config:
@@ -20,3 +22,6 @@ spring:
       on-profile: prod
 
 shipping-service-secret-key: ${SHIPPING_SERVICE_SECRET_KEY}
+shipping-service-url: ${SHIPPING_SERVICE_URL}
+account-service-url: ${ACCOUNT_SERVICE_URL}
+account-service-secret-key: ${ACCOUNT_SERVICE_SECRET_KEY}
