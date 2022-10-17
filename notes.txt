@@ -1,7 +1,6 @@
 minikube start --mount-string="keycloak/realms/import:/opt/keycloak/data/import" --mount
 minikube start --mount-string="keycloak/realms/export:/tmp/export" --mount
 
-
 kubectl get pods | grep keycloak
 kubectl exec -it keycloak-57c6789f87-6dg44 -- /bin/sh
 

@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -81,6 +82,22 @@ public class OrderServiceImpl implements OrderService {
         } catch (Exception ex) {
             log.error("Error the get product details!", ex);
             throw new RuntimeException("Error the get product details!" + ex.getMessage());
+        }
+
+        // Update product quantity
+        List<Product> products = orderDto.getOrderItems().stream()
+                .map(o -> Product.builder()
+                        .id(o.getProductId())
+                        .quantity(o.getQuantity())
+                        .build())
+                .collect(Collectors.toList());
+        try {
+            HttpEntity<List<Product>> httpEntityProductQuantity = new HttpEntity<>(products, headersProduct);
+            restTemplate.postForEntity(productServiceUrl, httpEntityProductQuantity, Void.class);
+            log.info("Updated product quantities done!");
+        } catch(Exception e) {
+            log.error("Error to update product quantities: ", e);
+            throw new RuntimeException("Error to update product quantities: " + e.getMessage());
         }
 
         // Send request to shipping

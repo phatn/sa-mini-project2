@@ -44,7 +44,7 @@ public class ProductController {
     }
 
     @PostMapping("/service/products")
-    public void updateProductQuantity(@RequestParam List<ProductDto> productDtos) {
+    public void updateProductQuantity(@RequestBody List<ProductDto> productDtos) {
 
         if(!secretKey.equals(request.getHeader("X-PRODUCT-SERVICE-KEY"))) {
             throw new  AuthenticationException("Authentication failed");

@@ -52,6 +52,7 @@ public class ProductServiceImpl implements ProductService {
                 }
             }
         }
+        productRepository.saveAll(products);
     }
 
     @Override
