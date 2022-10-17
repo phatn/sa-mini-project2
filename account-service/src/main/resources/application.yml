@@ -3,7 +3,6 @@ spring:
     timeout-per-shutdown-phase: 10s
 server:
   shutdown: graceful
-  port: 8081
 
 ---
 spring:
@@ -18,6 +17,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+server:
+  port: 8081
 account-service-secret-key: "3e026744-4d78-11ed-bdc3-0242ac120002"
 ---
 spring:
@@ -32,4 +33,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+server:
+  port: 8080
 account-service-secret-key: ${ACCOUNT_SERVICE_SECRET_KEY}

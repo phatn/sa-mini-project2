@@ -3,10 +3,10 @@ package edu.miu.accountservice;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class AccountServiceApplicationTests {
 
-	@Test
+	//@Test
 	void contextLoads() {
 	}
 
