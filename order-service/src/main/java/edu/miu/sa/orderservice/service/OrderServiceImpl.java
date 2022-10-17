@@ -74,9 +74,9 @@ public class OrderServiceImpl implements OrderService {
             Order order = Order.builder()
                     .accountEmail(email)
                     .paymentType(orderDto.getPaymentType())
-                    .orderItems(orderDto.getOrderItems())
                     .total(total)
                     .build();
+            order.setOrderItems(orderDto.getOrderItems());
             orderRepository.save(order);
         } catch (Exception ex) {
             throw new RuntimeException("Error the get product details!" + ex.getMessage());

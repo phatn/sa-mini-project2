@@ -1,9 +1,7 @@
 package edu.miu.sa.orderservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,6 +11,8 @@ import java.util.Set;
 @Setter
 @Builder
 @Table(name = "orders")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Order {
 
     @Id
@@ -28,4 +28,9 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @JsonManagedReference
     private Set<OrderItem> orderItems;
+
+    public void setOrderItems(Set<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+        this.orderItems.forEach(o -> o.setOrder(this));
+    }
 }
