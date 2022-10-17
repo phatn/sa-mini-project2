@@ -19,6 +19,7 @@ spring:
     hibernate:
       ddl-auto: none
 
+product-quantity-threshold: 10
 product-service-secret-key: "3e02714e-4d78-11ed-bdc3-0242ac120002"
 ---
 spring:
@@ -33,4 +34,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+
+product-quantity-threshold: ${PRODUCT_QUANTITY_THRESHOLD}
 product-service-secret-key: ${PRODUCT_SERVICE_SECRET_KEY}

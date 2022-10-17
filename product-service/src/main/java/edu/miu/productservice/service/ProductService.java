@@ -10,4 +10,6 @@ public interface ProductService {
     ProductDto findById(int id);
 
     Set<ProductDto> findProductByIds(List<Integer> ids);
+
+    void updateQuantity(List<ProductDto> productDtos);
 }

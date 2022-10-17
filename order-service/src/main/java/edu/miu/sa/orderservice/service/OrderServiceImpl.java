@@ -79,6 +79,7 @@ public class OrderServiceImpl implements OrderService {
             order.setOrderItems(orderDto.getOrderItems());
             orderRepository.save(order);
         } catch (Exception ex) {
+            log.error("Error the get product details!", ex);
             throw new RuntimeException("Error the get product details!" + ex.getMessage());
         }
 
@@ -97,6 +98,7 @@ public class OrderServiceImpl implements OrderService {
             String response = restTemplate.postForEntity(paymentServiceUrl, requestEntity, String.class).getBody();
             log.info("Response from Shipping Service: " + response);
         } catch (Exception e) {
+            log.error("Error to send request to payment service!", e);
             throw new RuntimeException("Error to send request to payment service!" + e.getMessage());
         }
     }

@@ -39,8 +39,13 @@ spec:
             - name: PRODUCT_SERVICE_SECRET_KEY
               valueFrom:
                 configMapKeyRef:
-                  name: services-config
+                  name: service-configmap
                   key: product-service-secret-key
+            - name: PRODUCT_QUANTITY_THRESHOLD
+              valueFrom:
+                configMapKeyRef:
+                  name: service-configmap
+                  key: product-quantity-threshold
           ports:
             - name: http
               containerPort: 8080

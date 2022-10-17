@@ -42,4 +42,14 @@ public class ProductController {
         }
         return productService.findProductByIds(ids);
     }
+
+    @PostMapping("/service/products")
+    public void updateProductQuantity(@RequestParam List<ProductDto> productDtos) {
+
+        if(!secretKey.equals(request.getHeader("X-PRODUCT-SERVICE-KEY"))) {
+            throw new  AuthenticationException("Authentication failed");
+        }
+
+        productService.updateQuantity(productDtos);
+    }
 }

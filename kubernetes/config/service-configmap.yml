@@ -15,3 +15,5 @@ data:
   paypal-service-url: "http://payment-service:8080"
   bank-service-url: "http://bank-service:8080"
   credit-service-url: "http://credit-service:8080"
+
+  product-quantity-threshold: 10
