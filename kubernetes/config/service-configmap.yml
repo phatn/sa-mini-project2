@@ -16,4 +16,4 @@ data:
   bank-service-url: "http://bank-service:8080"
   credit-service-url: "http://credit-service:8080"
 
-  product-quantity-threshold: 10
+  product-quantity-threshold: '10'

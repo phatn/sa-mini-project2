@@ -7,8 +7,6 @@ kubectl exec -it keycloak-57c6789f87-6dg44 -- /bin/sh
 
 runtimeOnly 'mysql:mysql-connector-java'
 
-kubectl port-forward service/keycloak-service 8080:8080
-
 cd /opt/keycloak/bin
 sh kc.sh export --file sa-mini-project2-realm-prod.json --realm sa-mini-project2-realm-prod
 
