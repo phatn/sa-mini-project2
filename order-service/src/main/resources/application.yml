@@ -26,7 +26,9 @@ spring:
           jwk-set-uri: http://localhost:8080/realms/sa-mini-project2-realm-prod/protocol/openid-connect/certs
 
 product-service-secret-key: "3e02714e-4d78-11ed-bdc3-0242ac120002"
+payment-service-secret-key: "3e026eba-4d78-11ed-bdc3-0242ac120002"
 product-service-url: http://localhost:8087/service/products/
+payment-service-url: http://localhost:8086/api/payment/
 ---
 spring:
   config:
@@ -48,3 +50,6 @@ spring:
           jwk-set-uri: http://keycloak-service/realms/sa-mini-project1-realm-prod/protocol/openid-connect/certs
 
 product-service-secret-key: ${PRODUCT_SERVICE_SECRET_KEY}
+product-service-url: ${PRODUCT_SERVICE_URL}
+payment-service-secret-key: ${SHIPPING_SERVICE_SECRET_KEY}
+payment-service-url: ${PAYMENT_SERVICE_URL}

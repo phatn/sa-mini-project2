@@ -9,15 +9,17 @@ import org.springframework.web.client.RestTemplate;
 public class PaymentServiceImpl implements PaymentService {
     private final RestTemplate restTemplate;
 
-    private Environment env;
+    private final Environment env;
 
-    public PaymentServiceImpl(RestTemplate restTemplate) {
+
+    public PaymentServiceImpl(RestTemplate restTemplate, Environment env) {
         this.restTemplate = restTemplate;
+        this.env = env;
     }
 
     @Override
     public void pay(Payment payment) {
-        String url = env.getProperty(payment.getType().toString().toLowerCase() + "_url");
+        String url = env.getProperty("payment." + payment.getType().toLowerCase() + "service-url");
         System.out.println("URL: " + url);
     }
 }

@@ -2,11 +2,15 @@ package edu.miu.sa.orderservice.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Sets;
+import edu.miu.sa.orderservice.contant.Constant;
+import edu.miu.sa.orderservice.dto.OrderDto;
+import edu.miu.sa.orderservice.dto.Payment;
 import edu.miu.sa.orderservice.dto.Product;
 import edu.miu.sa.orderservice.entity.Order;
 import edu.miu.sa.orderservice.entity.OrderItem;
 import edu.miu.sa.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -22,6 +26,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderServiceImpl implements OrderService {
 
     private final RestTemplate restTemplate;
@@ -31,31 +36,69 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
 
     @Value("${product-service-secret-key}")
-    private String secretKey;
+    private String productSecretKey;
+
+    @Value("${payment-service-secret-key}")
+    private String paymentSecretKey;
 
     @Value("${product-service-url}")
     private String productServiceUrl;
 
+    @Value("${payment-service-url}")
+    private String paymentServiceUrl;
+
     @Override
-    public void save(Order order) {
-        Jwt jwt = (Jwt)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public void save(OrderDto orderDto) {
+        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String email = String.valueOf(jwt.getClaims().get("email"));
-        order.setAccountEmail(email);
-        HttpHeaders headers = createHeaders();
-        String ids = order.getOrderItems().stream().map(o -> String.valueOf(o.getProductId())).collect(Collectors.joining(","));
-        String url = productServiceUrl + "?ids="+ ids;
-        HttpEntity<Product> httpEntity = new HttpEntity<>(headers);
-        Set<Product> products = restTemplate.exchange(url, HttpMethod.GET, httpEntity, new ParameterizedTypeReference<Set<Product>>() {}).getBody();
-        double total = 0;
-        for(OrderItem orderItem : order.getOrderItems()) {
-            for(Product product : products) {
-                if(orderItem.getProductId() == product.getId()) {
-                    total += orderItem.getQuantity() * product.getPrice();
+
+        HttpHeaders headersProduct = new HttpHeaders();
+        headersProduct.set(Constant.X_PRODUCT_SERVICE_KEY, productSecretKey);
+        headersProduct.set("Content-Type", "application/json");
+        String ids = orderDto.getOrderItems().stream().map(o -> String.valueOf(o.getProductId())).collect(Collectors.joining(","));
+        String url = productServiceUrl + "?ids=" + ids;
+        HttpEntity<Product> httpEntity = new HttpEntity<>(headersProduct);
+
+        try {
+            Set<Product> products = restTemplate.exchange(url, HttpMethod.GET, httpEntity, new ParameterizedTypeReference<Set<Product>>() {
+            }).getBody();
+
+            double total = 0;
+            for (OrderItem orderItem : orderDto.getOrderItems()) {
+                for (Product product : products) {
+                    if (orderItem.getProductId() == product.getId()) {
+                        total += orderItem.getQuantity() * product.getPrice();
+                    }
                 }
             }
+            Order order = Order.builder()
+                    .accountEmail(email)
+                    .paymentType(orderDto.getPaymentType())
+                    .orderItems(orderDto.getOrderItems())
+                    .total(total)
+                    .build();
+            orderRepository.save(order);
+        } catch (Exception ex) {
+            throw new RuntimeException("Error the get product details!" + ex.getMessage());
         }
-        order.setTotal(total);
-        orderRepository.save(order);
+
+        // Send request to shipping
+        HttpHeaders headersShipping = new HttpHeaders();
+        headersShipping.set(Constant.X_PAYMENT_SERVICE_KEY, paymentSecretKey);
+        headersProduct.set("Content-Type", "application/json");
+        Payment payment = Payment.builder()
+                .type(orderDto.getPaymentType())
+                .accountEmail(email)
+                .paymentMap(orderDto.getPayment())
+                .build();
+
+        try {
+            HttpEntity<Payment> requestEntity = new HttpEntity<>(payment, headersShipping);
+            String response = restTemplate.postForEntity(paymentServiceUrl, requestEntity, String.class).getBody();
+            log.info("Response from Shipping Service: " + response);
+        } catch (Exception e) {
+            throw new RuntimeException("Error to send request to payment service!" + e.getMessage());
+        }
     }
 
     @Override
@@ -69,10 +112,4 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new RuntimeException("Cannot find order: " + id));
     }
 
-    private HttpHeaders createHeaders(){
-        return new HttpHeaders() {{
-            set( "X-PRODUCT-SERVICE-KEY", secretKey );
-            set("Content-Type", "application/json");
-        }};
-    }
 }

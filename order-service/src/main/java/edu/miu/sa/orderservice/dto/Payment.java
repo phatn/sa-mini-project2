@@ -1,16 +1,18 @@
-package edu.miu.sa.paymentservice.entity;
+package edu.miu.sa.orderservice.dto;
 
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Map;
 
 @Data
+@Builder
 public class Payment {
 
-    private String type;
-
     private String accountEmail;
+
+    private String type;
 
     private Map<String, String> paymentMap;
 

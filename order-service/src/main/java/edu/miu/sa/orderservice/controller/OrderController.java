@@ -1,5 +1,6 @@
 package edu.miu.sa.orderservice.controller;
 
+import edu.miu.sa.orderservice.dto.OrderDto;
 import edu.miu.sa.orderservice.entity.Order;
 import edu.miu.sa.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public void save(@RequestBody Order order) {
-        orderService.save(order);
+    public void save(@RequestBody OrderDto orderDto) {
+        orderService.save(orderDto);
     }
 }

@@ -53,6 +53,7 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
   `account_email` varchar(255) DEFAULT NULL,
+  `payment_type` varchar(255) DEFAULT NULL,
   `total` double NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
