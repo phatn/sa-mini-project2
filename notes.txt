@@ -15,6 +15,9 @@ kubectl port-forward service/keycloak-service 8080:8080
 # Build image
 docker build -t authentication-service:1.0.0 .
 
+# Get image
+docker images | grep authenticate
+
 # Tag image
 docker tag 6d1c5e9862aa phatnguyentan/authentication-service:1.0.0
 

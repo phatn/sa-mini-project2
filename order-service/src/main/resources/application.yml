@@ -57,8 +57,9 @@ server:
   port: 8085
 
 product-service-secret-key: ${PRODUCT_SERVICE_SECRET_KEY}
+payment-service-secret-key: ${PAYMENT_SERVICE_SECRET_KEY}
+account-service-secret-key: ${ACCOUNT_SERVICE_SECRET_KEY}
 product-service-url: ${PRODUCT_SERVICE_URL}
-payment-service-secret-key: ${SHIPPING_SERVICE_SECRET_KEY}
 payment-service-url: ${PAYMENT_SERVICE_URL}
 account-service-url: ${ACCOUNT_SERVICE_URL}
-account-service-secret-key: ${ACCOUNT_SERVICE_SECRET_KEY}
+

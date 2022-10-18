@@ -3,17 +3,14 @@ kind: ConfigMap
 metadata:
   name: service-configmap
 data:
-  order-service-secret-key: "3e025e16-4d78-11ed-bdc3-0242ac120002"
-  account-service-secret-key: "3e026744-4d78-11ed-bdc3-0242ac120002"
-  authentication-service-secret-key: "3e026924-4d78-11ed-bdc3-0242ac120002"
-  bank-service-secret-key: "3e026c08-4d78-11ed-bdc3-0242ac120002"
-  credit-service-secret-key: "3e026d66-4d78-11ed-bdc3-0242ac120002"
-  paypal-service-secret-key: "3e026eba-4d78-11ed-bdc3-0242ac120002"
-  product-service-secret-key: "3e02714e-4d78-11ed-bdc3-0242ac120002"
-  shipping-service-secret-key: "3e027946-4d78-11ed-bdc3-0242ac120002"
-
-  paypal-service-url: "http://payment-service:8080"
+  order-service-url: "http://order-service:8080"
+  account-service-url: "http://account-service:8080"
+  authentication-service-url: "http://authentication-service:8080"
   bank-service-url: "http://bank-service:8080"
   credit-service-url: "http://credit-service:8080"
+  paypal-service-url: "http://paypal-service:8080"
+  product-service-url: "http://product-service:8080"
+  shipping-service-url: "http://shipping-service:8080"
+  payment-service-url: "http://payment-service:8080"
 
   product-quantity-threshold: '10'
