@@ -4,7 +4,7 @@
 2. Tan Phat Nguyen
 
 ### Video for the quick demo
-https://mum0-my.sharepoint.com/:v:/g/personal/tan_nguyen_miu_edu/EXyPpJKbJPVAnnx-uXLurEEBfS9x98lHcHX-alIOaYKZMg?e=yGC9xa
+https://mum0-my.sharepoint.com/:v:/g/personal/tan_nguyen_miu_edu/EWVch0qxhZBFhJ886aM8LvQBLfhd2EgaM0nipukncYUoyw?e=NLgUma
 
 ## Build project
 Ensure minikube is up and running and run below command one by one
@@ -64,4 +64,13 @@ $ curl --location --request POST 'http://192.168.64.2:30085/api/orders' \
 }'
 ```
 6. Verify result in logs
+
+7. System design
+- Keycloak for authentication, it will verify username and passowrd and issue JWT token
+- Flow to place an order
+  1. Order -> Product to get product details and their qualtities
+  2. Order to call payment service to pass order detail
+  3. Payment service will call paypal, credit or bank service depends on payment type
+  4. Paypal, bank or credit service will call shipping service
+  5. If stock of product is lower than a threshold, then log a messsge
 
