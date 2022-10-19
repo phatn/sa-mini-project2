@@ -21,7 +21,7 @@ metadata:
   labels:
     app: order-service
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: order-service
@@ -32,11 +32,20 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: phatnguyentan/order-service:1.0.2
+          image: phatnguyentan/order-service:1.0.5
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: "prod"
-
+            - name: KEYCLOAK_ISSUER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: service-configmap
+                  key: keycloak-issuer-url
+            - name: KEYCLOAK_JWK_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: service-configmap
+                  key: keycloak-jwk-url
             - name: PRODUCT_SERVICE_URL
               valueFrom:
                 configMapKeyRef:

@@ -3,14 +3,16 @@ kind: ConfigMap
 metadata:
   name: service-configmap
 data:
-  order-service-url: "http://order-service:8080"
-  account-service-url: "http://account-service:8080"
-  authentication-service-url: "http://authentication-service:8080"
-  bank-service-url: "http://bank-service:8080"
-  credit-service-url: "http://credit-service:8080"
-  paypal-service-url: "http://paypal-service:8080"
-  product-service-url: "http://product-service:8080"
-  shipping-service-url: "http://shipping-service:8080"
-  payment-service-url: "http://payment-service:8080"
+  order-service-url: "http://order-service:8080/"
+  account-service-url: "http://account-service:8080/service/account"
+  authentication-service-url: "http://authentication-service:8080/"
+  bank-service-url: "http://bank-service:8080/api/bank"
+  credit-service-url: "http://credit-service:8080/api/credit"
+  paypal-service-url: "http://paypal-service:8080/api/paypal"
+  product-service-url: "http://product-service:8080/service/products/"
+  shipping-service-url: "http://shipping-service:8080/service/shipping"
+  payment-service-url: "http://payment-service:8080/api/payment"
+  keycloak-issuer-url: "http://keycloak-service:8080/realms/sa-mini-project2-realm-prod"
+  keycloak-jwk-url: "http://keycloak-service:8080/realms/sa-mini-project2-realm-prod/protocol/openid-connect/certs"
 
   product-quantity-threshold: '10'

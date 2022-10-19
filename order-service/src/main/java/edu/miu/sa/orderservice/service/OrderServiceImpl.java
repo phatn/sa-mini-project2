@@ -64,6 +64,7 @@ public class OrderServiceImpl implements OrderService {
         headersProduct.set("Content-Type", "application/json");
         String ids = orderDto.getOrderItems().stream().map(o -> String.valueOf(o.getProductId())).collect(Collectors.joining(","));
         String url = productServiceUrl + "?ids=" + ids;
+        log.error("url of product service: {}", url);
         HttpEntity<Product> httpEntity = new HttpEntity<>(headersProduct);
 
         try {

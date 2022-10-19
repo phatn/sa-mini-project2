@@ -38,8 +38,8 @@ spec:
               value: "prod"
             - name: PRODUCT_SERVICE_SECRET_KEY
               valueFrom:
-                configMapKeyRef:
-                  name: service-configmap
+                secretKeyRef:
+                  name: service-secret
                   key: product-service-secret-key
             - name: PRODUCT_QUANTITY_THRESHOLD
               valueFrom:

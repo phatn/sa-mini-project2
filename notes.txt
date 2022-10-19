@@ -14,16 +14,16 @@ sh kc.sh export --file sa-mini-project2-realm-prod.json --realm sa-mini-project2
 kubectl port-forward service/keycloak-service 8080:8080
 
 # Build image
-docker build -t paypal-service:1.0.0 .
+docker build -t order-service:1.0.5 .
 
 # Get image
-docker images | grep paypal
+docker images | grep order
 
 # Tag image
-docker tag 20add47b9a6e phatnguyentan/paypal-service:1.0.0
+docker tag 08059b24ede8 phatnguyentan/order-service:1.0.5
 
 # Push image
-docker push phatnguyentan/paypal-service:1.0.0
+docker push phatnguyentan/order-service:1.0.5
 
 
 kubectl run -i --rm --restart=Never curl-client --image=curlimages/curl --command -- curl -s 'http://order-service:8080/actuator/health'

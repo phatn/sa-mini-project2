@@ -9,7 +9,7 @@ spec:
     - name: http
       port: 8080
       targetPort: 8080
-      nodePort: 30087
+      nodePort: 30081
   selector:
     app: account-service
   type: NodePort
@@ -21,7 +21,7 @@ metadata:
   labels:
     app: account-service
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: account-service

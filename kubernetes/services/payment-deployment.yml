@@ -9,7 +9,7 @@ spec:
     - name: http
       port: 8080
       targetPort: 8080
-      nodePort: 30089
+      nodePort: 30086
   selector:
     app: payment-service
   type: NodePort
@@ -21,7 +21,7 @@ metadata:
   labels:
     app: payment-service
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: payment-service
