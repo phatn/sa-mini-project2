@@ -13,6 +13,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
+                        .mvcMatchers("/actuator/health/**").permitAll()
                         .mvcMatchers("/api/order/**").hasRole("CUSTOMER")
                         .anyRequest().authenticated()
                 )

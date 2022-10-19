@@ -54,7 +54,7 @@ spring:
           jwk-set-uri: http://keycloak-service/realms/sa-mini-project1-realm-prod/protocol/openid-connect/certs
 
 server:
-  port: 8085
+  port: 8080
 
 product-service-secret-key: ${PRODUCT_SERVICE_SECRET_KEY}
 payment-service-secret-key: ${PAYMENT_SERVICE_SECRET_KEY}

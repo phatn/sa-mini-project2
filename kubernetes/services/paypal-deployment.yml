@@ -1,68 +1,58 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: order-service
+  name: paypal-service
   labels:
-    app: order-service
+    app: paypal-service
 spec:
   ports:
     - name: http
       port: 8080
       targetPort: 8080
-      nodePort: 30085
+      nodePort: 30089
   selector:
-    app: order-service
+    app: paypal-service
   type: NodePort
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: order-service
+  name: paypal-service
   labels:
-    app: order-service
+    app: paypal-service
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: order-service
+      app: paypal-service
   template:
     metadata:
       labels:
-        app: order-service
+        app: paypal-service
     spec:
       containers:
-        - name: order-service
-          image: phatnguyentan/order-service:1.0.2
+        - name: paypal-service
+          image: phatnguyentan/paypal-service:1.0.0
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: "prod"
 
-            - name: PRODUCT_SERVICE_URL
+            - name: SHIPPING_SERVICE_URL
               valueFrom:
                 configMapKeyRef:
                   name: service-configmap
-                  key: product-service-url
-            - name: PAYMENT_SERVICE_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: service-configmap
-                  key: payment-service-url
+                  key: shipping-service-url
             - name: ACCOUNT_SERVICE_URL
               valueFrom:
                 configMapKeyRef:
                   name: service-configmap
                   key: account-service-url
 
-            - name: PRODUCT_SERVICE_SECRET_KEY
+            - name: SHIPPING_SERVICE_SECRET_KEY
               valueFrom:
                 secretKeyRef:
                   name: service-secret
-                  key: product-service-secret-key
-            - name: PAYMENT_SERVICE_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: service-secret
-                  key: payment-service-secret-key
+                  key: shipping-service-secret-key
             - name: ACCOUNT_SERVICE_SECRET_KEY
               valueFrom:
                 secretKeyRef:

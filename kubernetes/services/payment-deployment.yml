@@ -9,7 +9,7 @@ spec:
     - name: http
       port: 8080
       targetPort: 8080
-      nodePort: 30082
+      nodePort: 30089
   selector:
     app: payment-service
   type: NodePort
@@ -21,7 +21,7 @@ metadata:
   labels:
     app: payment-service
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: payment-service
@@ -38,18 +38,18 @@ spec:
               value: "prod"
             - name: PAYPAL_SERVICE_SECRET_KEY
               valueFrom:
-                configMapKeyRef:
-                  name: service-configmap
+                secretKeyRef:
+                  name: service-secret
                   key: paypal-service-secret-key
             - name: BANK_SERVICE_SECRET_KEY
               valueFrom:
-                configMapKeyRef:
-                  name: service-configmap
+                secretKeyRef:
+                  name: service-secret
                   key: bank-service-secret-key
             - name: CREDIT_SERVICE_SECRET_KEY
               valueFrom:
-                configMapKeyRef:
-                  name: service-configmap
+                secretKeyRef:
+                  name: service-secret
                   key: credit-service-secret-key
             - name: PAYPAL_SERVICE_URL
               valueFrom:

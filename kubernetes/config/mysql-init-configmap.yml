@@ -1,0 +1,123 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: database-init-config
+data:
+  init_data.sql: |-
+    CREATE DATABASE `order-db`; 
+    USE `order-db`;
+    
+    CREATE TABLE `orders` (
+        `id`            int    NOT NULL AUTO_INCREMENT,
+        `account_email` varchar(255) DEFAULT NULL,
+        `payment_type`  varchar(255) DEFAULT NULL,
+        `total`         double NOT NULL,
+        PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+    
+    CREATE TABLE `order_item` (
+      `id` int NOT NULL AUTO_INCREMENT,
+      `product_id` int NOT NULL,
+      `quantity` int NOT NULL,
+      `order_id` int DEFAULT NULL,
+      PRIMARY KEY (`id`),
+      KEY (`order_id`),
+      CONSTRAINT FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+    
+    
+    CREATE DATABASE `account-db`; 
+    USE `account-db`;
+    CREATE TABLE `account`
+    (
+        `id`                int NOT NULL AUTO_INCREMENT,
+        `email`             varchar(255) DEFAULT NULL,
+        `first_name`        varchar(255) DEFAULT NULL,
+        `last_name`         varchar(255) DEFAULT NULL,
+        `preferred_address` int NOT NULL,
+        `preferred_payment` int NOT NULL,
+        PRIMARY KEY (`id`),
+        UNIQUE KEY  (`email`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    
+    CREATE TABLE `address` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `city` varchar(255) DEFAULT NULL,
+    `street` varchar(255) DEFAULT NULL,
+    `zip_code` varchar(255) DEFAULT NULL,
+    `owner_id` int DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY (`owner_id`),
+    CONSTRAINT FOREIGN KEY (`owner_id`) REFERENCES `account` (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    
+    CREATE TABLE `payment` (
+      `id` int NOT NULL AUTO_INCREMENT,
+      `bank_account` varchar(255) DEFAULT NULL,
+      `bank_name` varchar(255) DEFAULT NULL,
+      `bank_routing` varchar(255) DEFAULT NULL,
+      `card_expires` varchar(255) DEFAULT NULL,
+      `card_number` varchar(255) DEFAULT NULL,
+      `card_security_code` varchar(255) DEFAULT NULL,
+      `paypal_number` varchar(255) DEFAULT NULL,
+      `paypal_token` varchar(255) DEFAULT NULL,
+      `type` varchar(255) DEFAULT NULL,
+      `owner_id` int DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY (`owner_id`),
+    CONSTRAINT FOREIGN KEY (`owner_id`) REFERENCES `account` (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+        
+    INSERT INTO account(`first_name`, `last_name`, `email`, `preferred_payment`, `preferred_address`)
+    VALUES ('Admin', 'User', 'admin@gmail.com', '1', '1'),
+           ('Phat', 'Nguyen', 'phatnguyen@outlook.com', '2', '2'),
+           ('Anh', 'Nguyen', 'tuananh@gmail.com', '3', '3');
+
+    INSERT INTO address(`street`, `city`, `zip_code`, `owner_id`)
+    VALUES ('414 NB St', 'Fairfield', '52556', '1'),
+           ('1000 Main', 'Fairfield', '52557', '2'),
+           ('505 East', 'Fairfield', '52557', '3');
+
+    INSERT INTO payment(`type`, `bank_account`, `bank_routing`, `bank_name`, `owner_id`)
+    VALUES ('BANK', '123456', '777777', 'Tuan Anh', '1');
+
+    INSERT INTO payment(`type`, `card_expires`, `card_number`, `card_security_code`, `owner_id`)
+    VALUES ('CREDIT', '01-2025', '999 999 999', '123', '2');
+
+    INSERT INTO payment(`type`, `paypal_number`, `paypal_token`, `owner_id`)
+    VALUES ('PAYPAL', '123456789', 'abc123', '3');
+    
+    CREATE DATABASE `product-db`; 
+    USE `product-db`;
+    CREATE TABLE `category`
+    (
+        `id`   int NOT NULL AUTO_INCREMENT,
+        `name` varchar(255) DEFAULT NULL,
+        PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+    
+    CREATE TABLE `product`
+    (
+        `id`          int    NOT NULL AUTO_INCREMENT,
+        `name`        varchar(255) DEFAULT NULL,
+        `price`       double NOT NULL,
+        `quantity`    int    NOT NULL,
+        `vendor`      varchar(255) DEFAULT NULL,
+        `category_id` int          DEFAULT NULL,
+        PRIMARY KEY (`id`),
+        KEY (`category_id`),
+        CONSTRAINT FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+    
+    INSERT INTO category(`name`)
+    VALUES ('ELECTRONICS'),
+           ('FOOD'),
+           ('CLOTHES');
+
+    INSERT INTO product(`id`, `name`, `vendor`, `category_id`, `quantity`, `price`)
+    VALUES (1, 'Television', 'Samsung', 1, '100', '700'),
+           (2, 'Android box', 'Google', 1, '50', '200'),
+           (3, 'Goldfish Cheddar Crackers', 'Goldfish', 2, '75', '20'),
+           (4, 'Kraft Original Macaroni', 'Kraft', 2, '30', '30'),
+           (5, 'Satin Effect Shirt', 'Zara', 3, '200', '40'),
+           (6, 'Cotton Shirt', 'H&M', 3, '300', '29');
