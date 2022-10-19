@@ -20,7 +20,7 @@ docker build -t paypal-service:1.0.0 .
 docker images | grep paypal
 
 # Tag image
-docker tag d48c618fc0de phatnguyentan/paypal-service:1.0.0
+docker tag 20add47b9a6e phatnguyentan/paypal-service:1.0.0
 
 # Push image
 docker push phatnguyentan/paypal-service:1.0.0
