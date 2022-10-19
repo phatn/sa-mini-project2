@@ -65,7 +65,12 @@ $ curl --location --request POST 'http://192.168.64.2:30085/api/orders' \
 ```
 6. Verify result in logs
 
-7. System design
+7. Shutdown all services
+```
+$ sh shutdown_services.sh
+```
+
+8. System design
 - Keycloak for authentication, it will verify username and passowrd and issue JWT token
 - Flow to place an order
   1. Order -> Product to get product details and their qualtities
